@@ -61,3 +61,64 @@ exports.deleteExpense = (req, res) => {
     }
   );
 };
+const path = require("path");
+const fs = require("fs");
+const chartService = require("../services/chart.service");
+
+exports.downloadChart = (req, res) => {
+  const userId = req.user.id;
+
+  // 1️⃣ Check user preference
+  db.get(
+    `SELECT allow_chart_download FROM users WHERE id = ?`,
+    [userId],
+    async (err, user) => {
+      if (err) {
+        return res.status(500).json({ message: "DB error" });
+      }
+
+      if (!user || user.allow_chart_download !== 1) {
+        return res
+          .status(403)
+          .json({ message: "Chart download disabled in preferences" });
+      }
+
+      // 2️⃣ Get expense summary
+      db.all(
+        `
+        SELECT category, SUM(amount) AS total
+        FROM expenses
+        WHERE user_id = ?
+        GROUP BY category
+        `,
+        [userId],
+        async (err, rows) => {
+          if (err) {
+            return res.status(500).json({ message: "DB error" });
+          }
+
+          if (!rows.length) {
+            return res.status(400).json({ message: "No data to generate chart" });
+          }
+
+          // 3️⃣ Generate chart
+          const chartsDir = path.join(__dirname, "../charts");
+          if (!fs.existsSync(chartsDir)) {
+            fs.mkdirSync(chartsDir);
+          }
+
+          const filePath = path.join(
+            chartsDir,
+            `expense-chart-${userId}.png`
+          );
+
+          await chartService.generateChart(rows, filePath);
+
+          // 4️⃣ Send file
+          res.download(filePath, "expense-chart.png");
+        }
+      );
+    }
+  );
+};
+

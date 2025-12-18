@@ -9,5 +9,6 @@ router.get("/", controller.getExpenses);
 router.post("/", controller.addExpense);
 router.get("/summary", controller.getSummary);
 router.delete("/:id", controller.deleteExpense);
+router.get("/chart/download", controller.downloadChart);
 
 module.exports = router;
