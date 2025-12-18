@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Register | BrokeWho?</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+  <div class="card">
+    <h2>Create Account</h2>
+
+    <label>Email</label>
+    <input id="email" type="email">
+
+    <label>Password</label>
+    <input id="password" type="password">
+
+    <button id="registerBtn" type="button">Register</button>
+
+    <p class="muted">
+      Already have an account?
+      <a href="login.html">Login</a>
+    </p>
+  </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const registerBtn = document.getElementById("registerBtn");
+
+  registerBtn.addEventListener("click", async () => {
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value;
+
+    if (!email || !password) {
+      alert("Please fill all fields");
+      return;
+    }
+
+    const res = await fetch("/api/auth/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password })
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      alert(data.message || "Registration failed");
+      return;
+    }
+
+    alert("Check your email to verify your account");
+    window.location.href = "login.html";
+  });
+});
+</script>
+
+</body>
+</html>

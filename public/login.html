@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login | BrokeWho?</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+  <div class="card">
+    <h2>Login</h2>
+
+    <label>Email</label>
+    <input id="email" type="email" placeholder="you@example.com">
+
+    <label>Password</label>
+    <input id="password" type="password" placeholder="••••••••">
+
+    <button id="loginBtn" type="button">Login</button>
+
+    <p class="muted">
+      Don’t have an account?
+      <a href="register.html">Create one</a>
+    </p>
+  </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  // If already logged in, go to dashboard
+  if (localStorage.getItem("token")) {
+    window.location.href = "dashboard.html";
+    return;
+  }
+
+  const loginBtn = document.getElementById("loginBtn");
+
+  loginBtn.addEventListener("click", async () => {
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value;
+
+    if (!email || !password) {
+      alert("Please enter email and password");
+      return;
+    }
+
+    const res = await fetch("/api/auth/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password })
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      alert(data.message || "Login failed");
+      return;
+    }
+
+    localStorage.setItem("token", data.token);
+    window.location.href = "dashboard.html";
+  });
+});
+</script>
+
+</body>
+</html>

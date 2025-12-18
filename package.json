@@ -1,0 +1,22 @@
+{
+  "name": "brokewho",
+  "version": "1.0.0",
+  "description": "Expense tracker with JWT auth and monthly email reports",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "canvas": "^3.2.0",
+    "chart.js": "^4.5.1",
+    "chartjs-node-canvas": "^5.0.0",
+    "dotenv": "^17.2.3",
+    "express": "^4.22.1",
+    "jsonwebtoken": "^9.0.3",
+    "node-cron": "^4.2.1",
+    "nodemailer": "^7.0.11",
+    "sqlite3": "^5.1.7"
+  }
+}

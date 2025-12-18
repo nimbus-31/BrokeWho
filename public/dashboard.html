@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <title>Dashboard | BrokeWho?</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <nav>
+    <div class="nav-inner">
+      <h3>💸 BrokeWho?</h3>
+      <div class="nav-controls">
+        <button class="secondary" id="themeToggle">🌓 Theme</button>
+        <button class="secondary" id="logoutBtn">Logout</button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <header style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+      <h2>Financial Overview</h2>
+      <a href="expenses.html"><button>+ Add Expense</button></a>
+    </header>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
+      <div class="card">
+        <p class="muted">Total Monthly Spend</p>
+        <h1 id="total">₹0</h1>
+      </div>
+      <div class="card">
+        <p class="muted">Top Category</p>
+        <h1 id="top">—</h1>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Spending Breakdown</h3>
+      <canvas id="expenseChart" height="300"></canvas>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+      const token = localStorage.getItem("token");
+      if (!token) { window.location.href = "login.html"; return; }
+
+      // Logout Logic
+      document.getElementById("logoutBtn").onclick = () => {
+        localStorage.removeItem("token");
+        window.location.href = "login.html";
+      };
+      // Load saved theme
+const savedTheme = localStorage.getItem("theme");
+if (savedTheme) {
+  document.documentElement.setAttribute("data-theme", savedTheme);
+}
+
+      // Theme Toggle Logic
+      document.getElementById("themeToggle").onclick = () => {
+        const theme = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
+        document.documentElement.setAttribute("data-theme", theme);
+      };
+
+      // Fetch Summary
+      const res = await fetch("/api/expenses/summary", {
+        headers: { Authorization: "Bearer " + token }
+      });
+      const data = await res.json();
+
+      if (!data || data.length === 0) {
+        document.getElementById("expenseChart").replaceWith("No spending data yet.");
+        return;
+      }
+
+      // Calculate Totals
+      const totalSum = data.reduce((acc, curr) => acc + curr.total, 0);
+      const topCat = data.sort((a, b) => b.total - a.total)[0].category;
+      document.getElementById("total").innerText = `₹${totalSum.toLocaleString()}`;
+      document.getElementById("top").innerText = topCat;
+
+      // Render Chart
+      new Chart(document.getElementById("expenseChart"), {
+        type: "doughnut",
+        data: {
+          labels: data.map(d => d.category),
+          datasets: [{
+            data: data.map(d => d.total),
+            backgroundColor: ["#10b981", "#3b82f6", "#f97316", "#ef4444", "#a855f7"],
+            borderWidth: 0
+          }]
+        },
+        options: { cutout: '70%', plugins: { legend: { position: 'bottom' } } }
+      });
+    });
+  </script>
+</body>
+</html>

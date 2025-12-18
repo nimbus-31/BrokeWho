@@ -1,0 +1,7 @@
+node_modules/
+.env
+*.db
+charts/
+verify-user.js
+fix-users-table.js
+add-user-preferences.js

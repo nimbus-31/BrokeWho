@@ -1,0 +1,305 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  --bg: #f3f4f6;
+  --card: #ffffff;
+  --text: #1f2937;
+  --muted: #6b7280;
+  --primary: #10b981;
+  --primary-dark: #059669;
+  --accent: #3b82f6;
+  --danger: #ef4444;
+  --border: #e5e7eb;
+  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="dark"] {
+  --bg: #0f172a;
+  --card: #1e293b;
+  --text: #f8fafc;
+  --muted: #94a3b8;
+  --border: #334155;
+  --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
+  transition: all 0.3s ease;
+}
+
+/* Layout */
+.app-container {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* Navbar Fix */
+nav {
+  background: var(--nav-bg);
+  backdrop-filter: blur(12px);
+  padding: 15px 0; /* Increased padding */
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  width: 100%; /* Ensure full width */
+}
+
+nav .nav-inner {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Ensure headings inside nav don't have large margins */
+nav h3, nav h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: var(--primary);
+}
+
+main {
+  flex: 1;
+  padding: 2rem 3rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* UI Elements */
+.card {
+  background: var(--card);
+  border-radius: 12px;
+  padding: 1.5rem;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  margin-bottom: 1.5rem;
+}
+
+h1, h2, h3 { margin-top: 0; font-weight: 700; }
+
+button {
+  background: var(--primary);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.25rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+button:hover { background: var(--primary-dark); transform: translateY(-1px); }
+
+button.secondary {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+
+input {
+  width: 100%;
+  padding: 0.75rem;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  margin-bottom: 1rem;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, min-minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.chart-container {
+  position: relative;
+  height: 400px;
+  width: 100%;
+}
+/* Update your existing CSS with these refined variables */
+:root {
+  --bg: #f8fafc;
+  --card: #ffffff;
+  --text: #1e293b;
+  --muted: #64748b;
+  --primary: #10b981;
+  --border: rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="dark"] {
+  --bg: #0b0f1a;
+  --card: #161c2d;
+  --text: #f3f4f6;
+  --muted: #94a3b8;
+  --border: rgba(255, 255, 255, 0.1);
+}
+
+body {
+  transition: background 0.3s ease, color 0.3s ease; /* Smooth mode switch */
+}
+
+.card {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  transition: transform 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-2px); /* Subtle resume-worthy polish */
+}
+/* Auth pages (login & register) */
+.container {
+  max-width: 420px;
+  margin: 80px auto;
+}
+
+.card {
+  padding: 1.8rem;
+}
+
+.card h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.card input {
+  font-size: 0.95rem;
+  padding: 0.65rem;
+}
+
+.card button {
+  width: 100%;
+  margin-top: 0.5rem;
+}
+/* Dashboard chart */
+.chart-container {
+  max-width: 360px;
+  margin: 0 auto;
+}
+
+canvas {
+  max-height: 260px !important;
+}
+/* Dashboard stat cards */
+.stats-grid .card {
+  text-align: center;
+  padding: 1.2rem;
+}
+
+.stats-grid h1 {
+  font-size: 2rem;
+  margin: 0.25rem 0;
+}
+
+.stats-grid .muted {
+  font-size: 0.85rem;
+}
+
+h1 {
+  font-size: 2.2rem;
+}
+
+h2 {
+  font-size: 1.6rem;
+}
+
+h3 {
+  font-size: 1.2rem;
+}
+
+.muted {
+  opacity: 0.75;
+}
+
+button {
+  transition: all 0.2s ease;
+}
+
+button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+}
+body {
+  background: radial-gradient(
+    circle at top,
+    #1e293b 0%,
+    #0f172a 45%,
+    #020617 100%
+  );
+}
+.container {
+  position: relative;
+  z-index: 1;
+}
+.card {
+  background: rgba(15, 23, 42, 0.95);
+  backdrop-filter: blur(6px);
+}
+/* Expense list delete buttons */
+li button.danger {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border-radius: 50%;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+li button.danger:hover {
+  background: #dc2626;
+  transform: scale(1.05);
+}
+/* REMOVE gradients completely */
+body {
+  background: var(--bg) !important;
+}
+/* Light mode (simple & clean) */
+:root {
+  --bg: #f3f4f6;        /* light grey */
+  --card: #ffffff;
+  --text: #111827;
+  --muted: #6b7280;
+  --border: #e5e7eb;
+  --primary: #10b981;
+  --danger: #ef4444;
+}
+
+/* Dark mode (solid dark grey) */
+[data-theme="dark"] {
+  --bg: #0f172a;        /* dark grey */
+  --card: #1e293b;     /* slightly lighter card */
+  --text: #f9fafb;
+  --muted: #9ca3af;
+  --border: #334155;
+}
+nav {
+  background: var(--card);
+  border-bottom: 1px solid var(--border);
+}
+
+nav a,
+nav button {
+  color: var(--text) !important;
+  opacity: 1 !important;
+}
+
+nav button.secondary {
+  border-color: var(--border);
+}
+.card {
+  background: var(--card);
+  color: var(--text);
+}
+
+.card * {
+  opacity: 1;
+}
+
