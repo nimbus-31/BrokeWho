@@ -56,7 +56,12 @@ exports.login = (req, res) => {
       { expiresIn: JWT_EXPIRES_IN }
     );
 
-    res.json({ token });
+    res.json({
+  token,
+  needsPreferences: user.preferences_set === 0
+});
+
+
   });
 };
 

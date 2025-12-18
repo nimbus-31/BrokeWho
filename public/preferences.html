@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Preferences | BrokeWho?</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <h3>BrokeWho?</h3>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="card">
+    <h2>Before we begin</h2>
+
+    <label>
+      <input type="checkbox" id="monthly" checked>
+      Send me a monthly expense report by email
+    </label>
+
+    <br><br>
+
+    <label>
+      <input type="checkbox" id="download" checked>
+      Allow downloading my expense chart
+    </label>
+
+    <br><br>
+
+    <button id="save">Continue</button>
+  </div>
+</div>
+
+<script>
+const token = localStorage.getItem("token");
+if (!token) window.location.href = "login.html";
+
+document.getElementById("save").onclick = async () => {
+  await fetch("/api/auth/preferences", {
+    method: "POST",
+    headers: {
+      "Authorization": "Bearer " + token,
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      receive_monthly_report: document.getElementById("monthly").checked,
+      allow_chart_download: document.getElementById("download").checked
+    })
+  });
+
+  window.location.href = "dashboard.html";
+};
+</script>
+
+<script src="theme.js"></script>
+</body>
+</html>
